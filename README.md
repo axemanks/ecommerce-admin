@@ -10,3 +10,6 @@ Shadcn - UI
 zustand - state management
 Forms - react-hook-form
 Validation - ZOD
+Prisma - DB management
+
+Can use PlanetScale (free) but this is setup with Azure - SQL flexible server
