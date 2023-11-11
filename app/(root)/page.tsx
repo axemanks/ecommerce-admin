@@ -1,13 +1,27 @@
 // Root page
+"use client"
+// Global Imports
+import { useEffect } from 'react';
+// Local Imports
+import { useStoreModal } from '@/hooks/use-store-modal';
 
-import { Button } from '@/components/ui/button'
-import { UserButton } from '@clerk/nextjs';
-import Image from 'next/image'
+
 
 const SetupPage =() => {
+  const onOpen = useStoreModal((state) => state.onOpen); // since we can use useStore in useEffect, we can just get the state from zustand
+  const isOpen = useStoreModal((state) => state.isOpen);
+
+  useEffect(() => {
+    // check if the modal is open, if not, open it
+    if (!isOpen) {
+      onOpen();
+    }
+  }, [onOpen, isOpen]);
+
+
   return (
     <div  className='p-4'>
-        <UserButton afterSignOutUrl='/' />
+        Root Page
     </div>
   )
 }
