@@ -6,7 +6,7 @@ import prismadb from '@/lib/prismadb';
 
 // PATCH /api/stores/[storeId] - Update store
 export async function PATCH(
-  _req: Request, // unused, but needed
+  req: Request,
   { params }: { params: { storeId: string } }
 ) {
   try {
@@ -50,7 +50,7 @@ export async function PATCH(
 
 // DELETE /api/stores/[storeId] - Delete store
 export async function DELETE(
-  _req: Request,
+  _req: Request, // unused but params has to be the second argument
   { params }: { params: { storeId: string } } // params MUST be the second argument
 ) {
   try {

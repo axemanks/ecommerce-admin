@@ -6,6 +6,15 @@ import { Trash } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+
+import { Button } from '@/components/ui/button';
+import { Heading } from '@/components/ui/heading';
+import { Separator } from '@/components/ui/separator';
+import { Input } from '@/components/ui/input';
+import toast from 'react-hot-toast';
 import {
   Form,
   FormControl,
@@ -14,11 +23,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-
-import { Button } from '@/components/ui/button';
-import { Heading } from '@/components/ui/heading';
-import { Separator } from '@/components/ui/separator';
-import { Input } from '@/components/ui/input';
+import { AlertModal } from '@/components/modals/alert-modal';
 
 interface SettingsFormProps {
   initialData: Store;
@@ -35,6 +40,8 @@ type SettingsFormValues = z.infer<typeof formSchema>;
 export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const params = useParams();
+  const router = useRouter();
 
   // form hook
   const form = useForm<SettingsFormValues>({
@@ -45,10 +52,26 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   // Our onSubmit function - will be passed to the form handleSubmit function
   const onSubmit = async (data: SettingsFormValues) => {
     console.log(data);
+    try {
+      setLoading(true);
+      await axios.patch(`/api/stores/${params.storeId}`, data);
+      router.refresh(); // refresh the page
+      toast.success("Updates successful.")
+    } catch (error) {
+      toast.error("Something went wrong")
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
+    <AlertModal 
+    isOpen={open}
+    onClose={() => setOpen(false)}
+    onConfirm={()=>{}}
+    loading={loading}
+    />
       <div className='flex items-center justify-between'>
         <Heading
           title='Settings'
