@@ -1,20 +1,18 @@
 // This form will be for settings
 'use client';
-import * as z from 'zod';
-import { Store } from '@prisma/client';
-import { Trash } from 'lucide-react';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { Store } from '@prisma/client';
 import axios from 'axios';
-import { useParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
-
-import { Button } from '@/components/ui/button';
-import { Heading } from '@/components/ui/heading';
-import { Separator } from '@/components/ui/separator';
-import { Input } from '@/components/ui/input';
+import { Trash } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import * as z from 'zod';
+
+import { AlertModal } from '@/components/modals/alert-modal';
+import { ApiAlert } from '@/components/ui/api-alert';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -23,8 +21,10 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { AlertModal } from '@/components/modals/alert-modal';
-import { ApiAlert } from '@/components/ui/api-alert';
+import { Heading } from '@/components/ui/heading';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import { useOrigin } from '@/hooks/use-origin';
 
 interface SettingsFormProps {
   initialData: Store;
@@ -43,6 +43,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const [loading, setLoading] = useState(false);
   const params = useParams();
   const router = useRouter();
+  const origin = useOrigin(); // our use-origin hook
 
   // form hook
   const form = useForm<SettingsFormValues>({

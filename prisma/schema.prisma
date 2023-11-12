@@ -16,6 +16,20 @@ model Store {
   id     String @id @default(uuid())
   name   String
   userId String
+  billboards Billboard[] @relation("StoreToBillboard") // relation to billboards
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// Model for bilboards - storeId field in the Billboard model is used to link each Billboard to a Store via the Store's id.
+model Billboard {
+  id String @id @default(uuid())
+  storeId String
+  store Store @relation("StoreToBillboard", fields: [storeId], references: [id]) // relation to store
+  label String
+  imageUrl String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId]) // Create Index - Indexes are used to speed up the performance of database operations. By creating an index on the storeId field, any operations that involve searching for billboards by storeId will be faster.
 }
