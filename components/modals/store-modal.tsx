@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import toast from 'react-hot-toast';
 
 
 // Define form shape (schema)
@@ -44,14 +45,14 @@ export const StoreModal = () => {
     // attempt to create a new store
     try {        
         setLoading(true); // disables the input and buttons
+
         // call api endpoing /api/stores
         const response = await axios.post('/api/stores', values);
-        console.log(response.data);
-
-
+        toast.success("Store created successfully");
 
     } catch (error) {
         console.log(error);
+        toast.error("Something went wrong creating a new store, Please try again");
     } finally {
         setLoading(false);
     }
