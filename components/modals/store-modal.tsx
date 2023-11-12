@@ -46,9 +46,10 @@ export const StoreModal = () => {
     try {        
         setLoading(true); // disables the input and buttons
 
-        // call api endpoing /api/stores
+        // call api endpoing /api/stores - response will have the storeId
         const response = await axios.post('/api/stores', values);
-        toast.success("Store created successfully");
+        // redirect to store using the storeId
+        window.location.assign(`/${response.data.id}`)
 
     } catch (error) {
         console.log(error);

@@ -1,4 +1,4 @@
-// Root page
+// Root page - used to trigger modal
 "use client"
 // Global Imports
 import { useEffect } from 'react';
@@ -19,10 +19,6 @@ const SetupPage =() => {
   }, [onOpen, isOpen]);
 
 
-  return (
-    <div  className='p-4'>
-        Root Page
-    </div>
-  )
+  return null;
 }
 export default SetupPage;
