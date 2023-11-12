@@ -1,4 +1,4 @@
-// Main
+// Main navigation 
 "use client"
 
 import { cn } from "@/lib/utils";
@@ -9,15 +9,20 @@ import React from "react";
 export function MainNav({
     className,
     ...props
-}: React.HTMLAttributes<HTMLElement>) {
-    
+}: React.HTMLAttributes<HTMLElement>) {    
     const pathname = usePathname();
     const params = useParams();
+    // Routes in the nav menu
     const routes = [
         {
             href: `/${params.storeId}/settings`,
             label: "Settings",
             active: pathname === `/${params.storeId}/settings`
+        },
+        {
+            href: `/${params.storeId}/`,
+            label: "Overview",
+            active: pathname === `/${params.storeId}/`
         },
     ]
 

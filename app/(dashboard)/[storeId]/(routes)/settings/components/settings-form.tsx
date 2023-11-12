@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { AlertModal } from '@/components/modals/alert-modal';
+import { ApiAlert } from '@/components/ui/api-alert';
 
 interface SettingsFormProps {
   initialData: Store;
@@ -64,12 +65,30 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     }
   };
 
+  // Delete function
+  const onDelete = async () => {
+    try {
+      setLoading(true);
+      await axios.delete(`/api/stores/${params.storeId}`);
+      router.refresh();
+      router.push("/")
+      toast.success("Store deleted.")
+
+    } catch (error) {
+      toast.error("Make sure you removed all products and categories first.")
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  };
+
   return (
     <>
+    {/* Alert Modal */}
     <AlertModal 
     isOpen={open}
     onClose={() => setOpen(false)}
-    onConfirm={()=>{}}
+    onConfirm={onDelete}
     loading={loading}
     />
       <div className='flex items-center justify-between'>
@@ -77,7 +96,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
           title='Settings'
           description='Manage your store settings'
         />
-        {/* button to remove */}
+        {/* button to delete store */}
         <Button
           disabled={loading}
           variant='destructive'
@@ -129,6 +148,16 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
           </Button>
         </form>
       </Form>
+
+      {/* seperator */}
+      <Separator />
+
+      {/* Api Alert */}
+      <ApiAlert
+      title='NEXT_PUBLIC_API_URL'
+      description={`${origin}/api/${params.storeId}`}
+      variant='admin'
+      />
     </>
   );
 };
