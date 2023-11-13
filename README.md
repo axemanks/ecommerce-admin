@@ -25,3 +25,6 @@ Reset db:
 npx prisma migrate reset - resets database completely
 npx prisma generate - rebuilds the types
 npx prisma db push - syncs local db to azure db
+
+TODO:
+Add color picker to color page - right now we have to enter a hex value and they won't know what that is.
