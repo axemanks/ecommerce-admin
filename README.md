@@ -14,6 +14,7 @@ ZOD - Validation - https://zod.dev/
 Prisma - ORM for DB management -https://www.prisma.io/docs
 Axios - fetches - https://axios-http.com/docs/intro
 React-hot-toast - Notifications - https://react-hot-toast.com/docs
+Cloudinary - Image uploads - https://console.cloudinary.com/
 
 
 Useful commands:
