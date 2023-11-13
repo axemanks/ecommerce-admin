@@ -20,6 +20,7 @@ model Store {
   categories Category[] @relation("StoreToCategory") // relation to categories
   sizes Size[] @relation("StoreToSize") // relation to size
   colors Color[] @relation("StoreToColor") // relation to colors
+  products Product[] @relation("StoreToProduct") // relation to products
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -45,6 +46,7 @@ model Category {
   store Store @relation("StoreToCategory", fields: [storeId], references: [id]) // relation to store
   billboardId String
   billboard Billboard @relation(fields: [billboardId], references: [id]) // relation to billboard
+  products Product[] @relation("CategoryToProduct") // relation to products
   name String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -58,6 +60,7 @@ model Size {
   id String @id @default(uuid())
   storeId String
   store Store @relation("StoreToSize", fields: [storeId], references: [id]) // relation to store
+  product Product[]  // relation to product
   name String
   value String
   createdAt DateTime @default(now())
@@ -71,10 +74,48 @@ model Color {
   id String @id @default(uuid())
   storeId String
   store Store @relation("StoreToColor", fields: [storeId], references: [id]) // relation to store
+  product Product[] // relation to product
   name String
   value String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([storeId])
+}
+
+// Product
+model Product {
+  id String @id @default(uuid())
+  storeId String
+  store Store @relation("StoreToProduct", fields: [storeId], references: [id]) // relation to store
+  categoryId String
+  category Category @relation("CategoryToProduct", fields: [categoryId], references: [id]) // relation to category
+  name String
+  price Decimal
+  isFeatured Boolean @default(false)
+  isArchived Boolean @default(false)
+  sizeId String 
+  size Size @relation(fields: [sizeId], references: [id]) // relation to size
+  colorId String
+  color Color @relation(fields: [colorId], references: [id]) // relation to color
+  images Image[] 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId])
+  @@index([categoryId])
+  @@index([sizeId])
+  @@index([colorId])
+}
+
+// Model Image - product can have multiple images
+model Image {
+  id String @id @default(uuid())
+  productId String
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade) // Cascade allows to delte product even if images are still there
+  url String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
 }
