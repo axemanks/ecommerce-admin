@@ -1,12 +1,41 @@
-// Billboards page in settings
-
+// Billboards Overview page in settings - shows available billboards and their status
+import { format } from "date-fns";
 import { BillboardClient } from "./components/client";
+import prismadb from '@/lib/prismadb';
+import { BillboardColumn } from "./components/columns";
 
-const BillboardsPage = () => {
+const BillboardsPage = async ({
+    params,
+}: {
+    params: {
+        storeId: string;
+    };
+
+}) => {
+    // fecth billboards
+    const billboards = await prismadb.billboard.findMany({
+        where: {
+            storeId: params.storeId,
+        },
+        // order by newest
+        orderBy: {
+            createdAt: 'desc', // descending or newest first
+        }
+    });
+
+    // Format the billboards before passing to component
+    const formattedBillboards: BillboardColumn[] = billboards.map((item) => ({
+        id: item.id,
+        label: item.label,
+        // need to covert createdAt from date to string using date-fns
+        createdAt: format(item.createdAt, 'MMMM do, yyyy')
+    }))
+
+
     return (
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <BillboardClient />
+                <BillboardClient data={formattedBillboards}/>
             </div>
         </div>
     )

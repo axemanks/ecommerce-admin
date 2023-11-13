@@ -30,9 +30,9 @@ const formSchema = z.object({
   label: z.string().min(1),
   imageUrl: z.string().min(1),
 });
-
+// Type
 type BillboardFormValues = z.infer<typeof formSchema>;
-
+// Interface
 interface BillboardFormProps {
   initialData: Billboard | null;
 }
@@ -77,36 +77,35 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         // create billboard
         await axios.post(`/api/${params.storeId}/billboards`, data);
       }
-      router.refresh();
+      
       router.push(`/${params.storeId}/billboards`);
+      router.refresh();
       toast.success(toastMessage);
+      
     } catch (error: any) {
       toast.error('Something went wrong.');
     } finally {
       setLoading(false);
     }
   };
+
   // Handle delete
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        // Delete billboard
-        `/api/${params.storeId}/billboards/${params.billboardId}`
-      );
+      await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
       router.refresh();
       router.push(`/${params.storeId}/billboards`);
       toast.success('Billboard deleted.');
     } catch (error: any) {
-      toast.error(
-        'Make sure you removed all categories that are using this billboard first.'
-      );
+      toast.error('Make sure you removed all categories using this billboard first.');
     } finally {
       setLoading(false);
       setOpen(false);
     }
-  };
+  }
 
+  
   return (
     <>
       <AlertModal

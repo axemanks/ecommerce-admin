@@ -15,7 +15,8 @@ Prisma - ORM for DB management -https://www.prisma.io/docs
 Axios - fetches - https://axios-http.com/docs/intro
 React-hot-toast - Notifications - https://react-hot-toast.com/docs
 Cloudinary - Image uploads - https://console.cloudinary.com/
-
+Tanstack - @tanstack/react-table - Data table
+date-fns - convert date to string - npm i date-fns
 
 Useful commands:
 npx prisma studio - to view data in sql db
