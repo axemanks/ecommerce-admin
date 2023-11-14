@@ -108,7 +108,7 @@ model Product {
   @@index([colorId])
 }
 
-// Model Image - product can have multiple images
+// Image - product can have multiple images
 model Image {
   id String @id @default(uuid())
   productId String
