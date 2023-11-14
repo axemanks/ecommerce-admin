@@ -21,6 +21,7 @@ model Store {
   sizes Size[] @relation("StoreToSize") // relation to size
   colors Color[] @relation("StoreToColor") // relation to colors
   products Product[] @relation("StoreToProduct") // relation to products
+  orders Order[] @relation("StoreToOrder") // relation to orders
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -99,6 +100,7 @@ model Product {
   colorId String
   color Color @relation(fields: [colorId], references: [id]) // relation to color
   images Image[] 
+  orderItems OrderItem[] // relation to order items
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -117,5 +119,32 @@ model Image {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([productId])
+}
+
+// Order model
+model Order {
+  id String @id @default(uuid())
+  storeId String
+  store Store @relation("StoreToOrder", fields: [storeId], references: [id]) // relation to store
+  orderItems OrderItem[] // relation to order items
+  isPaid Boolean @default(false)
+  phone String @default("")
+  address String @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId])
+}
+
+// OrderItem
+model OrderItem {
+  id String @id @default(uuid())
+  orderId String
+  order Order @relation(fields: [orderId], references: [id]) // relation to order
+  productId String
+  product Product @relation(fields: [productId], references: [id]) // relation to product
+
+  @@index([orderId])
   @@index([productId])
 }
