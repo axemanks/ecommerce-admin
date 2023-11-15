@@ -17,6 +17,7 @@ React-hot-toast - Notifications - https://react-hot-toast.com/docs
 Cloudinary - Image uploads - https://console.cloudinary.com/
 Tanstack - @tanstack/react-table - Data table
 date-fns - convert date to string - npm i date-fns
+recharts - sales chart
 
 Useful commands:
 npx prisma studio - to view data in sql db
