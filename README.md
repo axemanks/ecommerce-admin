@@ -28,3 +28,6 @@ npx prisma db push - syncs local db to azure db
 
 TODO:
 Add color picker to color page - right now we have to enter a hex value and they won't know what that is.
+
+Note:
+when testing run stripe webhook locally: stripe listen --forward-to localhost:3000/api/webhook
