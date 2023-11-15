@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs";
 
 import prismadb from "@/lib/prismadb";
 
+// GET
 export async function GET(
   req: Request,
   { params }: { params: { categoryId: string } }

@@ -156,13 +156,14 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
               </FormItem>
             )}
           />
+          {/* Label */}
           <div className='md:grid md:grid-cols-3 gap-8'>
             <FormField
               control={form.control}
               name='label'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Billboard name</FormLabel>
+                  <FormLabel>Text to be displayed on billboard</FormLabel>
                   <FormControl>
                     <Input
                       disabled={loading}
