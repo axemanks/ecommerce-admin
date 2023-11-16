@@ -1,12 +1,12 @@
 // Navbar component - will fetch the list of stores and provide them to the store-switcher component
 
 import { UserButton, auth } from '@clerk/nextjs'
-import React from 'react'
 import { redirect } from 'next/navigation'
 
 import { MainNav } from '@/components/main-nav'
 import StoreSwitcher from '@/components/store-switcher'
-import prismadb from '../lib/prismadb';
+import prismadb from '../lib/prismadb'
+import { DarkModeToggle } from '@/components/theme-toggle'
 
 
 type Props = {}
@@ -35,6 +35,7 @@ const Navbar = async (props: Props) => {
                 <MainNav className='mx-6' />
             
             <div className='ml-auto flex items-center space-x-4'>
+                <DarkModeToggle />
                 <UserButton afterSignOutUrl='/' />
             </div>
         </div>
